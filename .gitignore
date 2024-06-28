@@ -1,33 +1,47 @@
-# node package download
-**/node_modules
+# compiled output
+/dist
+/dist-web
+/node_modules
+/.turbo
 
-# macos
+*/**/dist
+*/**/node_modules
+
+# /.config
+
+*/**/temp_cache
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
 .DS_Store
 
-# production
-**/dist
-.idea
+# Tests
+/coverage
+/.nyc_output
 
-# ssr production
-**/.env.local
-**/dist-ssr
-**/.next
-**/.umi
-**/.umi-production
-**/.dumi
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# local env
-*.local
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-
-# pnpm package npmrc
-.pnpm-debug.log
-
-# eslint
-.eslintcache
-.vscode/settings.json
-
-
-**/.turbo
-
-**/*.env
+# lock
+pnpm-lock.yaml
