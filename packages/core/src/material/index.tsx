@@ -2,6 +2,7 @@ import React from "react";
 import { UserComponent, UserComponentConfig, useNode } from "@craftjs/core";
 import { ErrorBoundary } from "react-error-boundary";
 import { useParseBinding } from "./binding";
+// import { onUpdated, store } from '../store'
 import { forEach } from "lodash";
 import { ScopeMoudleId } from '../utils'
 
@@ -40,6 +41,22 @@ const withConnectNode = (
     } = useNode((evt) => ({
       custom: evt.data.custom
     }));
+    console.log(props, '43---------')
+    // 处理数据中心组件共享store
+    // useThrottleEffect(() => {
+    //   if (props.$$store && Array.isArray(props.$$store)) {
+    //     const result: Record<string, any> = {}
+    //     props.$$store.forEach((item: any) => {
+    //       result[item.name] = item.defaultVal
+    //     })
+
+      
+    //   store.dispatch(onUpdated({
+    //     [id]: result
+    //   }))
+    //   }
+    // }, [props.$$store])
+
     const memoizdProps = useParseBinding(props, id);
 
     const eventProps = React.useMemo(() => {

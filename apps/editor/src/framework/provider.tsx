@@ -15,12 +15,13 @@ export interface EditoRootWrapperProps {
 
 export const EditoRootWrapper: React.FC<EditoRootWrapperProps> = (props) => {
 
-  // 生命周期实现
+  // 向画布中动态模块加载
   useMount(() => {
     jsRuntime.loadJS("https://www.unpkg.com/dayjs@1.11.9/dayjs.min.js")
   })
 
   return (
+    // 这块应该扩充逻辑FrameworkContextProvider这样，
     <RootEditor
       resolver={{ ...DefaultMaterials, ...ArcoMaterials, EmptySetter }}
       onRender={RenderNodeWrapper}

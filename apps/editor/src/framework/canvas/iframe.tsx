@@ -89,7 +89,9 @@ export const IFrame: React.FC<IFrameProps> = (props) => {
             container: document?.head,
           });
           return (
+            // antd的一些基础组件的公共样式兼容方案，指定将stylelink标签插入到iframe的容器head里
             <StyleProvider container={document?.head} >
+              {/* 缓存内部的emotion样式，缓存到iframe里 */}
               <CacheProvider value={cache}>{props.children}</CacheProvider>
             </StyleProvider>
           );

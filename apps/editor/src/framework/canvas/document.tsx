@@ -13,7 +13,8 @@ export const DocumentNodes = () => {
   const { document: canvasDocument } = useFrame();
   const elements = useDynamicHeadInsertion();
   const jsMoudleCode = useSchema(select => select.jsMoudleCode)
-
+  // [链接](https://juejin.cn/book/6918979822425210891/section/7275897331948945408?enter_from=course_center&utm_source=course_center#heading-6) 
+  // 1静态资源加载实现 
   React.useEffect(() => {
     const canvasElement = document.getElementById(CanvasRootId);
     const insertElement = canvasElement ? canvasDocument : document;
@@ -23,6 +24,7 @@ export const DocumentNodes = () => {
     }
   }, [canvasDocument, elements]);
 
+  // 2自定义模块加载实现
   useAsyncEffect(async () => {
     const cjsCode = await sucraseTransformCode(jsMoudleCode)
     const { exports  } = compileModuleResolve(cjsCode);

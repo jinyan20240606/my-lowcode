@@ -23,7 +23,7 @@ export const Framework = () => {
 
   return (
     <EditoRootWrapper>
-      <div className={classes.layout}>
+      <div className={classes.layout} id="editor-children">
         {/** 头部 */}
         <Header />
         {/** 编辑器主体 */}
