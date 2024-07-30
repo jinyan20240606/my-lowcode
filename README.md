@@ -1,11 +1,5 @@
-# 前端简易版代码
+# 服务端学习项目
 
-> 基于这个仓库clone的：https://github.com/Ignition-Space/Ignition-web
+> 参考 https://juejin.cn/book/6918979822425210891/section/7220043907789226016?enter_from=course_center&utm_source=course_center
 
-主要记下笔记，归纳总结，进一步进阶到服务端
-
-## 开发启动
-
-1. 先pnpm run build:editor，再到editor目录下单独去dev启动
-
-## 。。
+## 项目初始化
