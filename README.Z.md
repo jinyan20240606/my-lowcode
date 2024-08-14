@@ -19,3 +19,11 @@
 ### nestjs项目初始化
 
 1. 用nest初始化项目
+2. 项目拆分
+    - 之前设计是微服务，多个工程不太好维护，要Monorepo的方式支持微服务
+    - 执行 nest generate app devops
+    - nest组织代码模式转化为monorepo模式：可参考https://www.kancloud.cn/juukee/nestjs/2706858
+    - nest start // 启动默认的项目
+    - nest start devops  // 启动 devops 子模块
+3. 用Turborepo管理Monorepo
+    - 开多个窗口运行不好用，借助turbo一次性启动所有子应用
