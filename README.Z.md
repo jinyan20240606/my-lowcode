@@ -29,3 +29,6 @@
     - 开多个窗口运行不好用，借助turbo一次性启动所有子应用
     - 接入turbo运行管理
     - 用pnpm start 可以一键启动
+4. monorepo间创建公共库
+    - monorepo项目中借助nestjs提供的library能力来实现
+    - 直接用命令实现即可
