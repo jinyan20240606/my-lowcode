@@ -15,3 +15,7 @@
 2. 初始化数据库可视化客户端
     - MongoDB：安装使用vscode插件客户端：MongoDB for VS Code
     - mysql：使用vsocde插件：Database Client；参照语雀node沉淀中的https://juejin.cn/post/7232098240420905019?share_token=6b73b0fa-cbec-47bf-b05c-65552be2a7bd#heading-3 记录
+
+### nestjs项目初始化
+
+1. 用bun初始化包项目
