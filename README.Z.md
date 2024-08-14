@@ -27,3 +27,5 @@
     - nest start devops  // 启动 devops 子模块
 3. 用Turborepo管理Monorepo
     - 开多个窗口运行不好用，借助turbo一次性启动所有子应用
+    - 接入turbo运行管理
+    - 用pnpm start 可以一键启动
