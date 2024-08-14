@@ -1,0 +1,21 @@
+# 服务端学习项目
+
+> 参考 https://juejin.cn/book/6918979822425210891/section/7220043907789226016?enter_from=course_center&utm_source=course_center
+
+## 学习docker入门
+
+> 见docker-learn目录
+
+## 13、初始化项目
+
+### 环境搭建
+
+1. 新建docker-compose配置文件：`docker-compose.yml`
+    - 通过docker镜像安装mysql，mongodb等软件
+2. 初始化数据库可视化客户端
+    - MongoDB：安装使用vscode插件客户端：MongoDB for VS Code
+    - mysql：使用vsocde插件：Database Client；参照语雀node沉淀中的https://juejin.cn/post/7232098240420905019?share_token=6b73b0fa-cbec-47bf-b05c-65552be2a7bd#heading-3 记录
+
+### nestjs项目初始化
+
+1. 用nest初始化项目
