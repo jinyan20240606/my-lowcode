@@ -32,3 +32,32 @@
 4. monorepo间创建公共库
     - monorepo项目中借助nestjs提供的library能力来实现
     - 直接用命令实现即可
+
+## 14、基础大综合
+
+### 选择用express
+
+### 版本控制
+
+使用nestjs提供的版本控制能力
+
+1. 单个请求控制
+2. 全局配置请求控制
+
+### 全局返回参数
+
+修改 main.ts 文件，添加 useGlobalInterceptors 全局拦截器，处理统一标准返回值
+
+### 全局异常拦截
+
+异常的测试都在my-lowcode/app.controller文件写过，注释起来了
+
+#### 通用异常拦截
+1. 新建src/common/exceptions/base.exception.filter.ts 与 http.exception.filter.ts 两个文件
+2. 在 main.ts 文件中添加 useGlobalFilters 全局过滤器
+
+#### 业务异常拦截
+1. 新建一个 business.exception.ts 来处理业务运行中预知且主动抛出的异常
+2. 简单改造一下 HttpExceptionFilter，在处理 HTTP 异常返回之前先处理业务异常
+3. 在 AppController 中重新伪造一个业务异常的场景
+
