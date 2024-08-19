@@ -1,6 +1,7 @@
 {
   "name": "low-code-test",
   "version": "0.0.1",
+  "description": "我的低代码搭建服务端",
   "packageManager": "pnpm@9.7.0",
   "scripts": {
     "dev": "cd .. && pnpm start:lowcode"

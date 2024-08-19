@@ -11,7 +11,7 @@ export class AppController {
    
   ) {}
 
-  @Get()
+  @Get('/getHello')
   @Version('1')
   getHello(): string {
     // const a: any = {}
