@@ -17,7 +17,7 @@ export class AppController {
     // const a: any = {}
     // console.log('请求了-----', a.b.c)
     // throw new BusinessException('业务通用错误，你的参数错了')
-    console.log(this, this.configService.get('TEST_VALUE'), '19-------')
+    console.log(this, '19-------')
     return this.appService.getHello();
   }
 }
