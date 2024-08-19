@@ -61,3 +61,31 @@
 2. 简单改造一下 HttpExceptionFilter，在处理 HTTP 异常返回之前先处理业务异常
 3. 在 AppController 中重新伪造一个业务异常的场景
 
+#### 环境配置
+
+一般在项目开发中，至少会经历过 Dev -> Test -> Prod 三个环境。如果再富余一点的话，还会再多一个 Pre 环境。甚至在不差钱的情况下，每个环境可能都会有多套配置。那么对应的使用的数据库、Redis 或者其他的配置项都会随着环境的变换而改变，所以在实际项目开发中，多环境的配置非常必要
+
+##### 自带环境配置
+
+使用nestjs提供的多环节配置方法
+
+安装`pnpm add @nestjs/config -w` 包
+
+修改app.module.ts
+
+新增.env文件
+
+##### 自定义YAML
+
+用yaml文件替换默认的.env文件读取
+
+1. 禁用默认读取 .env 的规则
+2. 安装yaml的node库：`pnpm add yaml -w`
+3. 根目录新建.config文件夹
+
+##### 使用自定义配置
+
+最后使用cross-env指定运行环境来使用对应的环境变量
+
+- 安装`pnpm add cross-env -w`
+- 修改启动命令
