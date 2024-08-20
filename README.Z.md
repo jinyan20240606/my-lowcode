@@ -189,3 +189,23 @@ ORM框架：对象关系映射（Object-Relational Mapping, ORM）。主要是�
     - `nest g resource department --project user`
 2. 修改 uer/user.service.ts 中 create 方法，添加查询部门以及添加的关系逻辑
 3. 修改 department/department.service.ts 的 findAll 方法，添加 relations 筛选关联关系
+
+## 17、MongoDB数据库实操
+
+目前低代码项目my-lowcode使用mongoDB，用户微服务中使用mysql。
+
+这节应该是针对低代码项目进行操作了
+
+### 低代码搭建选择mongo不是mysql的选型原因，及两者对比介绍
+
+### 配置
+
+1. 低代码应用下创建3个子模块：Site、Page、PageConfig。里面的User模块不用了，只是留着用个练习demo。暂时注释User模块的引用即可
+```javascript
+nest g resource site --project my-lowcode
+nest g resource page --project my-lowcode
+nest g resource pageConfig --project my-lowcode
+```
+
+### 基础操作
+
