@@ -201,6 +201,7 @@ ORM框架：对象关系映射（Object-Relational Mapping, ORM）。主要是�
 ### 配置
 
 1. 低代码应用下创建3个子模块：Site、Page、PageConfig。里面的User模块不用了，只是留着用个练习demo。暂时注释User模块的引用即可
+2. 将pageConfig合并到page模块里，合并为一个Controller，因为pageConfig和page依赖性比较强
 ```javascript
 nest g resource site --project my-lowcode
 nest g resource page --project my-lowcode
