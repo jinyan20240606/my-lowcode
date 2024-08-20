@@ -6,9 +6,16 @@
 
 > 见docker-learn目录
 
-## 包积累
+## nest使用经验
+
+### 包积累
 
 1. class-validator：数据验证包，一般配合dto对象做的
+
+### 使用
+
+1. 一个子应用下写了多个模块如user应用下的user模块和department模块，两个模块互相调用service方法的话，不用在各自模块中单独引入service进行注册，而是直接利用模块的exports导出就可以
+    - 当别人引用这个模块时会自动注册其导出的方法
 
 ## 13、初始化项目
 
@@ -127,6 +134,11 @@ ORM框架：对象关系映射（Object-Relational Mapping, ORM）。主要是�
     - 数据库名字就是databse的值，一个entity实体就相当于一个表如定义的user实体在可视化客户端中是其数据库下的collection，
       表里的每一条数据就是一个Document，每个文档的结构可以有不同字段灵活
     - 会根据orm的语句自动创建数据库，mysql不能自动创建数据库，当新增数据时发现没有这个数据库就会报错
+- typeorm
+    - 实体表里设置的多对一关系字段，并不会体现在实际的表常规字段里，只是个虚拟标记
+        - 当查询用户所有数据时，带上关联标记参数时，这时返回的用户每条数据会带上department字段及对应部门表的值
+    - **表关联**：关联表所属数据展现都是typeorm框架自动做的只需要配置两方的映射字段和create多方数据时手动增加映射字段的值告诉框架去内部映射即可，所属映射的字段和值不会在数据库实体表里呈现，只会在实时查询展示给用户，
+        - 如部门和用户关联表，部门表里没有显示增加字段，用户表数据库里会每条数据显示增加对应所属的department_id字段，但普通查询数据库时不会返回给前端
 
 ### 封装
 
@@ -144,3 +156,36 @@ ORM框架：对象关系映射（Object-Relational Mapping, ORM）。主要是�
 
 1. 创建user服务文件夹，见下各个相关文件
 2. 最终文件夹下创建 user.module.ts，将 controller、providers、service 等都引入后，切记将 user.module.ts 导入 app.module.ts 后才会生效，这一步别忘记了 
+
+## 16、Mysql数据库实操+微服务创建
+
+### 创建user微服务
+
+不是前一节的将user服务直接写在my-lowcode服务里，而是将user抽出来一个子应用作为微服务
+
+前一节的my-lowcode/src下的user子模块 就可以删了不用了，直接用微独立服务
+
+1. 输入生成微服务的指令 `nest generate app user`
+    - 就是新增一个monorepo下的子独立服务应用
+2. 为了兼容给 MnnoRepo，app/user 目录下新增虚拟 package.json 文件
+3. 用以下脚本创建 curd 的 user 模块`nest g resource user1 --project devops`
+    - 命令来在指定项目子应用下创建一个crud模板目录
+    - user1是新子模块名称及文件夹名字
+    - devops在app下的devops子应用中创建
+
+
+### 基础操作
+
+1. 增
+2. 查：修改user.service.ts
+3. 删
+4. 改
+
+### 一对多
+
+增加部门表和用户表 ，表关联概念。当前用户属于哪个部门
+
+1. 先创建 User 的模式，创建一个 Department CRUD 模块
+    - `nest g resource department --project user`
+2. 修改 uer/user.service.ts 中 create 方法，添加查询部门以及添加的关系逻辑
+3. 修改 department/department.service.ts 的 findAll 方法，添加 relations 筛选关联关系
