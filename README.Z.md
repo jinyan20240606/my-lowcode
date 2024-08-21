@@ -284,3 +284,16 @@ TypeORM也支持MySQL的主从复制
 
 1. QueryBuilder：缓存方法
 2. Repository：的缓存方法
+
+## 19、开发CICD的CLI
+
+开发一款服务于cicd的cli
+
+设计2个独立模块，一个是ig-base-cli基础cicd，和ig-build-cli构建的cli，实现功能收敛
+
+源码参考：https://github.com/Ignition-Space/ig-base-cli
+
+### 开发自定义注册CLI命令行插件功能
+
+
+### 仿gitlabciyaml流程编排
