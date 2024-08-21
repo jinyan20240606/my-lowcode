@@ -21,7 +21,7 @@ export class SiteController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.siteService.findOne(+id);
+    return this.siteService.findOne(id);
   }
 
   @Patch(':id')

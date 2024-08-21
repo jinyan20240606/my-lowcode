@@ -9,6 +9,7 @@ export enum UserStatus {
 // 向mysql数据库中注册一张user表
 @Entity()
 export class User {
+  //  默认为自增 ID，适用与关系数据库SQL类型
   @PrimaryGeneratedColumn() // 自增主键
   id?: number;
 

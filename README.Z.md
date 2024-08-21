@@ -192,6 +192,8 @@ ORM框架：对象关系映射（Object-Relational Mapping, ORM）。主要是�
 
 ## 17、MongoDB数据库实操
 
+本节开始就着重开始低代码相关的服务搭建了
+
 目前低代码项目my-lowcode使用mongoDB，用户微服务中使用mysql。
 
 这节应该是针对低代码项目进行操作了
@@ -210,3 +212,13 @@ nest g resource pageConfig --project my-lowcode
 
 ### 基础操作
 
+#### 增
+
+1. 创建对应的实体类
+2. 看各种文件
+
+#### 查
+
+修改 site.controller.ts 的 findOne 方法
+
+看相关文件
