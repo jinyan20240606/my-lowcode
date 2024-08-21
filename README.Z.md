@@ -222,3 +222,65 @@ nest g resource pageConfig --project my-lowcode
 修改 site.controller.ts 的 findOne 方法
 
 看相关文件
+
+## 18、数据库TypeORM实操进阶
+
+> 将以 MySQL 作为 Demo 数据库来学习一下 TypeORM 常见的一些高阶用法
+
+### 多个数据源
+
+#### 多链接&多数据库
+
+就是之前封装那个libs/comm/database的mongoDB与mysql同时用这个功能，根据不同文件后缀名注册实体类
+因为typeorm初始化时需要指定文件后缀正则匹配加载对应的实体文件
+
+实现多链接的多数据库,就是多次初始化DataSource，初始化2个实例分别链接两个数据库
+
+更好的办法其实是用TypeORM的createConnection方法
+
+#### 单链接&多数据库
+
+除了多连接之外，TypeORM 也支持使用单链接 & 多数据模式，在这个模式中只需要建立一次链接就可以使用多个数据库
+
+1. 们指定了 databases 属性，它包含了一个数据库名的数组。这样，TypeORM 就知道这个连接可以用于多个数据库
+2. 当您定义实体时，可以指定该实体属于哪个数据库
+    - `@Entity({ database: 'database1' }) // 指定实体属于哪个数据库`
+
+#### 主从复制
+
+TypeORM也支持MySQL的主从复制
+
+### Find进阶
+
+请启动我们的 User 服务来体验下述例子
+
+#### Select
+
+有时并不需要将所有的数据都返回给前端，可以使用 Select 参数来过滤一些我们不想显示的字段
+
+1. 修改/user/user.service.ts 修改 findAll 查询数据库方法
+2. 增加select方法，仅筛选id，username的字段和关联字段进行输出
+
+#### Not
+
+1. /user/user.controller.ts 新建 findNotOne 方法:
+
+### QueryBuilder
+
+- QueryBuilder 是 TypeORM 最强大的功能之一 ，它允许你使用优雅便捷的语法构建 SQL 查询，执行并获得自动转换的实体
+    - 果当你的条件判断复杂度上升到常规方法不支持的时候，除了手写 Sql 之外，QueryBuilder 也是一个非常好的选择
+- 创建 QueryBuilder 的方法有多种：
+    - connection
+    - entity manager
+    - repository
+    对于我们封装好的工具类选择第三种 repository 的方式是最为简便的
+- 该方法对比直接手写SQL还是简便的
+
+### 查询缓存
+
+数据库查询是非常消耗资源，不需要实时性的话可以采用缓存减少查询频率
+
+可以利用TypeORM提供的缓存能力
+
+1. QueryBuilder：缓存方法
+2. Repository：的缓存方法

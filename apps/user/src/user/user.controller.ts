@@ -23,6 +23,11 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
+  @Get('notone/:id')
+  findNotOne(@Param('id') id: string) {
+    return this.userService.findNotOne(+id)
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     console.log(id, updateUserDto, '@Patch(“:id”)请求参数-------')

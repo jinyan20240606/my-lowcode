@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.mysql.entity';
-import { Repository } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { DepartmentService } from '../department/department.service';
 
 @Injectable()
@@ -24,12 +24,32 @@ export class UserService {
 
   findAll() {
     // 查询所有用户时，带上关联表的数据
-    return this.userRepository.find({ relations: ['department'] });
+    return this.userRepository.find({
+      // 仅选择这2字段进行输出
+      select: ['id', 'username'],
+      relations: ['department'],
+      cache: 50000 // 50000ms
+    });
   }
 
   findOne(id: number) {
     console.log('根据id查询用户详情', id);
     return this.userRepository.findOneBy({ id });
+  }
+
+  findNotOne(id: number) {
+    return this.userRepository.find({
+      where: {
+        id: Not(id)
+      }
+    })
+  }
+
+  // 创建QueryBuilder来代替普通的sql方法
+  findNotOneWithQueryBuild(id: number) {
+    const user = this.userRepository.createQueryBuilder("user")
+    user.where("user.id != :id", { id })
+    return user.getMany()
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
