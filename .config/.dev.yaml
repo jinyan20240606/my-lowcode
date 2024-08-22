@@ -17,6 +17,9 @@ MYSQL_CONFIG:
   password: "123456"
   database: "my_test_database"
   entities: "mysql"
-  logging: true
+  logging: false
   synchronize: true
   cache: true
+GITGUB_CONFIG:
+  CLIENT_ID: Iv23likJ1IcdXjDpYc8e
+  CLIENT_SECRETS: 97a2ed0838b6bd9a23b9119bfde25413386319cd

@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, GithubUserInfo } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.mysql.entity';
 import { Repository, Not } from 'typeorm';
@@ -30,6 +30,14 @@ export class UserService {
       relations: ['department'],
       cache: 50000 // 50000ms
     });
+  }
+
+  async createOrUpdateByOAoth(userInfo: GithubUserInfo) {
+    const findUser: User = await this.userRepository.findOne({
+      where: [{ email: userInfo.email }],
+    });
+
+    return await this.userRepository.save({ ...findUser, ...userInfo });
   }
 
   findOne(id: number) {

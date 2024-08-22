@@ -5,12 +5,14 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { UserProviders } from './user.providers';
 import { DepartmentModule } from '../department/department.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
     // 为当前user模块注册数据库基础模块
     DatabaseModule,
-    DepartmentModule
+    DepartmentModule,
+    AuthModule
   ],
   controllers: [UserController],
   providers: [...UserProviders, UserService],
