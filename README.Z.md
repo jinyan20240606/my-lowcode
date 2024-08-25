@@ -343,7 +343,12 @@ TypeORM也支持MySQL的主从复制
         - 安装`passport-custom` 来自定义passport策略支持github的oauth认证
     - JwtStrategy策略： 则是使用 passport-jwt拓展的功能，对 cookie 做了拦截、解密等功能
         - 安装`passport-jwt`使用其jwt策略插件
-3. 重写之前oauth授权方法
+3. 新增守卫拦截验证，重写之前oauth授权方法
+    - github的路由守卫
+        - 之前复用passport的守卫方法就行
+    - jwt的全局守卫用
+        - 需要自己继承passport的jwt守卫，重写下守卫方法，因为需要自定义下自己白名单逻辑，如登录接口不需要验证本来就是登录的
+        - 白名单统一用nest提供的元编程模块封装：@Public()自己封装装饰器来标记哪些接口是加白标记的
 
 #### 大体流程
 
@@ -358,8 +363,10 @@ TypeORM也支持MySQL的主从复制
         - login方法就是用jwt对拿到的user信息加密后生成个access_token，然后返回给前端保存
     - 处理token
         - 用respose.cookie方法将token种在客户端cookie下保存，返回前端
-        - 接口响应cookie不会立即在当前接口响应后看到，可以通过检查响应头setcookie或刷新页面浏览器才会显示
+        - 接口响应cookie不会立即在当前接口响应后看到，可以通过检查响应头setcookie或重启下控制台即可显示
 3. 上面就是github授权，授权后利用其user信息生成jwt-token返回前端种植完整链路
-4. 下面最后还需要将JwtAuthGuard守卫 在用户中心服务上设置为全局守卫做关口身份校验，自动对cookie中携带的token做解密验证
+4. 下面最后还需要将JwtAuthGuard守卫 在user子应用入口模块中上设置为全局守卫做关口身份校验，自动对cookie中携带的token做解密验证
     - `import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';`这俩方法用来注册**全局守卫**
-TODO。。。https://github.com/Ignition-Space/ignition/blob/e3c2387186e03b17bf901c89244549c6a00c1706/apps/userServer/src/user-center.module.ts#L10。
+    - 启用了jwt全局守卫，同时别忘了把jwt策略加在auth.module上下文中
+    - 引一个cookie-parser中间件
+    - 可以校验了

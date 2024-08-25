@@ -6,6 +6,7 @@ import { jwtConstants } from '../constants';
 
 const cookieExtractor = function (req) {
   let token = null;
+  // 需要引入cookie-parser中间件，才会赋值cookies属性
   if (req && req.cookies) {
     token = req.cookies['jwt'];
   }

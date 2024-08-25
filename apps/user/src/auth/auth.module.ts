@@ -12,6 +12,7 @@ import { DepartmentModule } from '../department/department.module';
 import { DatabaseModule } from '@app/comm/database/database.module';
 
 import { GithubStrategy } from './strategies/oauth.strategy';
+import { JwtStrategy } from './strategies/jwt-auth.strategy'
 
 @Module({
   imports: [DatabaseModule, DepartmentModule, 
@@ -23,7 +24,7 @@ import { GithubStrategy } from './strategies/oauth.strategy';
 
   ],
   controllers: [AuthController],
-  providers: [...UserProviders, AuthService, OAuthService, UserService, GithubStrategy],
+  providers: [...UserProviders, AuthService, OAuthService, UserService, GithubStrategy, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

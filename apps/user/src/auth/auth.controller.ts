@@ -6,7 +6,7 @@ import { OAuthGuard } from './guards/oauth.guard';
 import { PayloadUser } from '@app/comm';
 
 @ApiTags('用户认证')
-@Controller('api/auth')
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -34,7 +34,8 @@ export class AuthController {
     response.cookie('jwt', access_token, {
       path: '/',
       httpOnly: true,
-      domain: '.mylowcode.com'
+      domain: '.mylowcode.com',
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 设置cookie的有效时间为一天
     });
     return 'jwt种植成功'
   }
