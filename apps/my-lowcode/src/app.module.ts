@@ -11,6 +11,9 @@ import { DatabaseModule } from '@app/comm/database/database.module';
 @Module({
   imports: [
     DatabaseModule,
+    // 引入配置模块load自定义配置后，就可以在各个位置引用其ConfigService方法来获取环境变量方便
+    // import { ConfigService } from '@nestjs/config';
+    // 不引他的话，也可以自行在业务文件引getConfig执行获取总环境对象
     ConfigModule.forRoot({
       ignoreEnvFile: true,
       isGlobal: true,

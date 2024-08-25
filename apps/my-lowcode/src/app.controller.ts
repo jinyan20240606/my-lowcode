@@ -19,5 +19,9 @@ export class AppController {
     // throw new BusinessException('业务通用错误，你的参数错了')
     console.log(this, '19-------')
     return this.appService.getHello();
+
+    // 测试用内置方法获取环境变量
+    // const port = this.configService.get('GITGUB_CONFIG');
+    // console.log(port, '21-------')
   }
 }

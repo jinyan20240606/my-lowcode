@@ -84,11 +84,12 @@
 
 使用nestjs提供的多环节配置方法
 
-安装`pnpm add @nestjs/config -w` 包
-
-修改app.module.ts
-
-新增.env文件
+- 安装`pnpm add @nestjs/config -w` 包
+- 修改app.module.ts
+    - `import { ConfigModule } from '@nestjs/config';`
+- 业务文件处直接引用ConfigService获取环境变量对象
+    - `import { ConfigService } from '@nestjs/config';`
+- 新增.env文件
 
 #### 自定义YAML
 
