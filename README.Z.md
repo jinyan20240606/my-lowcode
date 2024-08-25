@@ -1,6 +1,7 @@
 # 服务端学习项目
 
 > 参考 https://juejin.cn/book/6918979822425210891/section/7220043907789226016?enter_from=course_center&utm_source=course_center
+> github代码仓库 https://github.com/Ignition-Space/ignition/blob/main/apps/userServer/src/user/user.module.ts
 
 ## 学习docker入门
 
@@ -11,6 +12,8 @@
 ### 包积累
 
 1. class-validator：数据验证包，一般配合dto对象做的
+2. @nestjs/passport: 兼容nest的passport中间件
+3. passport: [官网](https://juejin.cn/post/6931618922005266445) Node.js的封装jwt等方案的登陆验证鉴权的中间件，可与Express兼容
 
 ### 使用
 
@@ -326,3 +329,36 @@ TypeORM也支持MySQL的主从复制
 
 我们将完全按照之前的表结构来开发用户系统，为了方便各位操作，用户的三方登录将以 Github 授权来作为演示。
 
+1. 授权拼接测试地址：https://github.com/login/oauth/authorize?client_id=Iv23likJ1IcdXjDpYc8e
+    - 这个会回调携带code的自己定义的api链接
+
+#### token方案：jwt
+
+登录token的方案有很多种，选择jwt方案
+
+1. `npm install @nestjs/passport passport`
+2. 新建 /src/auth/strategies 目录，添加 oauth.strategy.ts 与 jwt-auth.strategy.ts 两个文件---- 2个通行策略执行
+    - GithubStrategy 策略： 根据 passport 提供的方法，调用 authService 中的 validateFeishuUser 方法，从 Github 获取对应的用户信息。
+        - 安装`passport-custom` 来自定义passport策略支持github的oauth认证
+    - JwtStrategy策略： 则是使用 passport-jwt拓展的功能，对 cookie 做了拦截、解密等功能
+        - 安装`passport-jwt`使用其jwt策略插件
+3. 重写之前oauth授权方法
+
+#### 大体流程
+
+1. 之前github授权那节在auth.controller路由方法时是直接用code调用的获取github用户信息然后更新数据库，直接返回就是最新的user信息
+2. 在加入jwt方案后:
+    - auth.controller中前置加入**路由守卫**，验证后才执行下一步
+        - 路由守卫直接用的passport提供的方法，自动调用定义的oauth.strategy策略验证方法
+        - 将code获取github用户信息的流程移到了这个自定义的策略中执行
+    - 验证通过后执行controller方法的参数自定义装饰器@PayloadUser方法
+        - 上一步守卫中间件逻辑中会将github用户信息对象默认附加到request的user属性中
+    - 继续调用auth.service的login方法
+        - login方法就是用jwt对拿到的user信息加密后生成个access_token，然后返回给前端保存
+    - 处理token
+        - 用respose.cookie方法将token种在客户端cookie下保存，返回前端
+        - 接口响应cookie不会立即在当前接口响应后看到，可以通过检查响应头setcookie或刷新页面浏览器才会显示
+3. 上面就是github授权，授权后利用其user信息生成jwt-token返回前端种植完整链路
+4. 下面最后还需要将JwtAuthGuard守卫 在用户中心服务上设置为全局守卫做关口身份校验，自动对cookie中携带的token做解密验证
+    - `import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';`这俩方法用来注册**全局守卫**
+TODO。。。https://github.com/Ignition-Space/ignition/blob/e3c2387186e03b17bf901c89244549c6a00c1706/apps/userServer/src/user-center.module.ts#L10。
