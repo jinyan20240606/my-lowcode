@@ -2,6 +2,7 @@
 
 > 参考 https://juejin.cn/book/6918979822425210891/section/7220043907789226016?enter_from=course_center&utm_source=course_center
 > github代码仓库 https://github.com/Ignition-Space/ignition/blob/main/apps/userServer/src/user/user.module.ts
+> 服务端整体架构：https://juejin.cn/book/6918979822425210891/section/6919485956798021632?enter_from=course_center&utm_source=course_center
 
 ## 学习docker入门
 
@@ -370,3 +371,54 @@ TypeORM也支持MySQL的主从复制
     - 启用了jwt全局守卫，同时别忘了把jwt策略加在auth.module上下文中
     - 引一个cookie-parser中间件
     - 可以校验了
+
+## 21、用户服务开发（下）
+
+用户服务是单独对应用户中心的一个后台管理系统，主要是这个后台的接口模块进行业务代码开发
+
+### 用户管理菜单
+
+### 系统管理
+
+见源码system目录
+
+### 资源管理
+
+见源码resource目录
+
+1. 主要2部分
+    - 菜单资源管理：前端界面展示
+    - 功能级别资源管理：主要用于服务端
+
+### 权限管理 
+
+在新建资源之后就是对应资源下的具体权限管理，可以理解为某个页面下的按钮级别权限
+见源码的privilege目录
+
+export enum Action {
+  Manage = 'manage',
+  Create = 'create',
+  Read = 'read',
+  Update = 'update',
+  Delete = 'delete',
+}
+
+### 角色管理
+
+角色需要同时关联用户以及权限，所以整体的设计比较复杂，为了将系统的拓展性做的比较通用，我们采用的是 role-privilege 以及 role-user 关联表的设计
+
+见role，role-privilege，user-role 3个目录，对应实体类有3张表
+
+1. 业务路径
+    - 新增角色
+        - 选择系统的归属：操作role表
+        - 为角色分配权限：操作role-privilege表
+    - 新增用户：分配角色：操作role-user 表
+### RBAC
+
+> 详见https://juejin.cn/book/6918979822425210891/section/6919485956798021632?enter_from=course_center&utm_source=course_center
+
+RBAC（Role-Based Access Control）  的三要素即用户、角色与权限。 用户通过赋予的角色，执行角色所拥有的权限
+
+1. 系统以及用户来获取到对应的角色，在通过角色拿到对应的权限此时的路径是最为简便的，所以将系统作为用户的直接属性，而用户与权限则作为关联表存在
+2. RBAC 引入之后用户的流程如上图所示，用户在进入系统之后，会先进行角色判断，再根据对应的角色查询所匹配的权限，最后根据返回结果来判断是否可执行
