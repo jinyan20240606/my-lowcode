@@ -53,6 +53,12 @@
 
 ### 选择用express
 
+### 全局接口前缀
+
+在main.ts 文件中添加如下代码:
+// 设置全局接口前缀
+app.setGlobalPrefix('api');
+
 ### 版本控制
 
 使用nestjs提供的版本控制能力
@@ -132,7 +138,11 @@ ORM框架：对象关系映射（Object-Relational Mapping, ORM）。主要是�
 - DTO（Data Transfer Object） 与 Entities 的区别，毕竟两个文件都很类似????
     - 首先它们都用于表示数据，但在设计和用途方面有所不同：
     - DTO 是一种数据传输对象，用于在不同的层之间传输数据。它通常用于将数据从数据库层传输到应用程序层，或将数据从应用程序层传输到前端层。DTO 的设计目的是为了最大程度地减少数据传输的开销，通常只包含必要的数据字段，而不包含任何业务逻辑或操作方法。
-    - 这个对象一般使用class-validator做校验
+    - 具体应用：安装class-validator包，后端主用于自动全局字段校验，保证请求接口字段校验正确。
+        - 写一个如请求body的DTO对象，并其中每个属性都有class-validator装饰器装饰。然后在main.ts中注册全局管道，这样在接口请求时，就会自动校验
+            - 详见https://github.com/Ignition-Space/ignition/blob/e3c2387186e03b17bf901c89244549c6a00c1706/apps/userServer/src/main.ts#L8
+            - app.useGlobalPipes(new ValidationPipe()); // ValidationPipe：@nestjs/common提供的公共方法
+    - 这个对象一般使用做校验
 
     - Entities 是一种实体对象，用于表示应用程序中的业务对象或领域对象。它通常用于表示数据库中的表或文档，或者表示应用程序中的业务对象。Entities 的设计目的是为了封装业务逻辑和操作方法，以便在应用程序中进行操作和处理。
 - MongoDB
